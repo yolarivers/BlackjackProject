@@ -25,6 +25,10 @@ public class Player {
         return hand.toString();
     }
 
+    public BlackJackHand getHand() {
+        return hand;
+    }
+
     @Override
     public String toString() {
         return "Player's hand: " + hand.toString();

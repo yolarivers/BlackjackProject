@@ -13,13 +13,26 @@ public class BlackJackApp {
     }
 
     public void launch() {
-        dealer.shuffleDeck();
-        initialDeal();
-        playerTurn();
-        if (!player.isOver21()) {
-            dealerTurn();
+        boolean playAgain = true;
+
+        while (playAgain) {
+            System.out.println("============================");
+            System.out.println("   Welcome to Blackjack!   ");
+            System.out.println("============================");
+            dealer.shuffleDeck();
+            initialDeal();
+            playerTurn();
+            if (!player.isOver21()) {
+                dealerTurn();
+            }
+            determineWinner();
+            playAgain = askToPlayAgain();
+            resetGame();
         }
-        determineWinner();
+
+        System.out.println("============================");
+        System.out.println("   Thank you for playing!   ");
+        System.out.println("============================");
     }
 
     private void initialDeal() {
@@ -33,15 +46,17 @@ public class BlackJackApp {
     private void playerTurn() {
         boolean playerStands = false;
         while (!playerStands && !player.isOver21()) {
-            System.out.println("Your hand: " + player.getHandDetails());
-            System.out.println("Your hand value: " + player.getHandValue());
+        	System.out.println("Your hand value: " + player.getHandValue());
             System.out.print("Would you like to hit or stand? (h/s): ");
             String choice = scanner.nextLine();
             if (choice.equalsIgnoreCase("h")) {
                 player.addCardToHand(dealer.dealCard());
-                System.out.println("Your hand: " + player.getHandDetails());
-                System.out.println("Your hand value: " + player.getHandValue());
-                if (player.isOver21()) {
+                if (!player.isOver21()) {
+                    //System.out.println("Your hand: " + player.getHandDetails());
+                    System.out.println("Your hand value: " + player.getHandValue());
+                } else {
+                    //System.out.println("Your hand: " + player.getHandDetails());
+                    System.out.println("Your hand value: " + player.getHandValue());
                     System.out.println("YOU ARE OVER 21!");
                 }
             } else {
@@ -82,5 +97,16 @@ public class BlackJackApp {
     private void displayHands(boolean hideDealerSecondCard) {
         System.out.println("Dealer's hand: " + dealer.getHandDetails(hideDealerSecondCard));
         System.out.println("Your hand: " + player.getHandDetails());
+    }
+
+    private boolean askToPlayAgain() {
+        System.out.print("Would you like to play again? (y/n): ");
+        String choice = scanner.nextLine();
+        return choice.equalsIgnoreCase("y");
+    }
+
+    private void resetGame() {
+        player.getHand().clear();
+        dealer.getHand().clear();
     }
 }
