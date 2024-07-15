@@ -19,5 +19,10 @@ public class Dealer extends Player {
         deck.shuffle();
     }
 
-   
+    public String getHandDetails(boolean hideSecondCard) {
+        if (hideSecondCard && hand.getCardCount() > 1) {
+            return "[Hidden], " + hand.getCard(1);
+        }
+        return hand.toString();
+    }
 }

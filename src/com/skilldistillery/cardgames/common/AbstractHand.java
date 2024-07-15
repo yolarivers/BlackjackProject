@@ -12,7 +12,11 @@ public abstract class AbstractHand {
 
     public abstract int getHandValue();
 
-    public abstract void addCard(Card card);
+    public void addCard(Card card) {
+        cardsInHand.add(card);
+    }
 
-    public abstract void clear();
+    public void clear() {
+        cardsInHand.clear();
+    }
 }
